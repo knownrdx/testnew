@@ -1,6 +1,7 @@
 # ─── Stage 1: install all deps ───────────────────────────────
 FROM node:20-alpine AS deps
 WORKDIR /app
+ENV NODE_ENV=development
 COPY package.json ./
 RUN npm install --legacy-peer-deps
 
