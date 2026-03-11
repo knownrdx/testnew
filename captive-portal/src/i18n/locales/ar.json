@@ -1,0 +1,19 @@
+{
+  "welcome": "مرحباً",
+  "subtitle": "يرجى تسجيل الدخول للوصول إلى WiFi",
+  "tab_room": "تسجيل دخول الغرفة",
+  "tab_voucher": "رمز القسيمة",
+  "room_number": "رقم الغرفة",
+  "last_name": "الاسم الأخير",
+  "voucher_code": "رمز القسيمة",
+  "connect": "اتصال",
+  "connecting": "جارٍ الاتصال...",
+  "success_title": "تم الاتصال!",
+  "success_subtitle": "استمتع بإقامتك والإنترنت السريع.",
+  "redirecting": "جارٍ التحويل...",
+  "error_invalid": "بيانات اعتماد غير صالحة. يرجى المحاولة مرة أخرى.",
+  "error_limit": "تم الوصول إلى حد الأجهزة لهذه الغرفة.",
+  "placeholder_room": "مثال: 101",
+  "placeholder_name": "مثال: Smith",
+  "placeholder_voucher": "مثال: ABCD1234"
+}

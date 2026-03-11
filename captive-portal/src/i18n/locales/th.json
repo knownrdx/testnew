@@ -1,0 +1,19 @@
+{
+  "welcome": "ยินดีต้อนรับ",
+  "subtitle": "กรุณาเข้าสู่ระบบเพื่อใช้งาน WiFi",
+  "tab_room": "เข้าสู่ระบบด้วยห้อง",
+  "tab_voucher": "โค้ดโวชเชอร์",
+  "room_number": "หมายเลขห้อง",
+  "last_name": "นามสกุล",
+  "voucher_code": "รหัสโวชเชอร์",
+  "connect": "เชื่อมต่อ",
+  "connecting": "กำลังเชื่อมต่อ...",
+  "success_title": "เชื่อมต่อสำเร็จ!",
+  "success_subtitle": "ขอให้มีความสุขในการพักผ่อน",
+  "redirecting": "กำลังนำทาง...",
+  "error_invalid": "ข้อมูลไม่ถูกต้อง กรุณาลองใหม่",
+  "error_limit": "ถึงขีดจำกัดอุปกรณ์สำหรับห้องนี้แล้ว",
+  "placeholder_room": "เช่น 101",
+  "placeholder_name": "เช่น สมิธ",
+  "placeholder_voucher": "เช่น ABCD1234"
+}

@@ -1,0 +1,19 @@
+{
+  "welcome": "欢迎",
+  "subtitle": "请登录以使用 WiFi",
+  "tab_room": "房间登录",
+  "tab_voucher": "凭证码",
+  "room_number": "房间号",
+  "last_name": "姓氏",
+  "voucher_code": "凭证码",
+  "connect": "连接",
+  "connecting": "连接中...",
+  "success_title": "已连接！",
+  "success_subtitle": "祝您入住愉快，享受高速 WiFi。",
+  "redirecting": "正在跳转...",
+  "error_invalid": "凭据无效，请重试。",
+  "error_limit": "此房间的设备数量已达上限。",
+  "placeholder_room": "如 101",
+  "placeholder_name": "如 Smith",
+  "placeholder_voucher": "如 ABCD1234"
+}

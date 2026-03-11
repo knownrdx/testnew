@@ -1,0 +1,19 @@
+{
+  "welcome": "ようこそ",
+  "subtitle": "WiFiを使用するにはログインしてください",
+  "tab_room": "部屋番号でログイン",
+  "tab_voucher": "バウチャーコード",
+  "room_number": "部屋番号",
+  "last_name": "姓",
+  "voucher_code": "バウチャーコード",
+  "connect": "接続する",
+  "connecting": "接続中...",
+  "success_title": "接続しました！",
+  "success_subtitle": "ご滞在をお楽しみください。",
+  "redirecting": "リダイレクト中...",
+  "error_invalid": "認証情報が無効です。もう一度お試しください。",
+  "error_limit": "この部屋のデバイス上限に達しました。",
+  "placeholder_room": "例: 101",
+  "placeholder_name": "例: スミス",
+  "placeholder_voucher": "例: ABCD1234"
+}

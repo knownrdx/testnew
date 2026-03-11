@@ -1,0 +1,19 @@
+{
+  "welcome": "Welcome",
+  "subtitle": "Please log in to access WiFi",
+  "tab_room": "Room Login",
+  "tab_voucher": "Voucher",
+  "room_number": "Room Number",
+  "last_name": "Last Name",
+  "voucher_code": "Voucher Code",
+  "connect": "Connect",
+  "connecting": "Connecting...",
+  "success_title": "You're Connected!",
+  "success_subtitle": "Enjoy your stay and fast WiFi.",
+  "redirecting": "Redirecting...",
+  "error_invalid": "Invalid credentials. Please try again.",
+  "error_limit": "Device limit reached for this room.",
+  "placeholder_room": "e.g. 101",
+  "placeholder_name": "e.g. Smith",
+  "placeholder_voucher": "e.g. ABCD1234"
+}

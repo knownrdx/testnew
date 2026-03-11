@@ -1,0 +1,19 @@
+{
+  "welcome": "환영합니다",
+  "subtitle": "WiFi를 사용하려면 로그인하세요",
+  "tab_room": "객실 로그인",
+  "tab_voucher": "바우처 코드",
+  "room_number": "객실 번호",
+  "last_name": "성",
+  "voucher_code": "바우처 코드",
+  "connect": "연결",
+  "connecting": "연결 중...",
+  "success_title": "연결되었습니다!",
+  "success_subtitle": "즐거운 숙박 되세요.",
+  "redirecting": "리디렉션 중...",
+  "error_invalid": "잘못된 자격 증명입니다. 다시 시도해 주세요.",
+  "error_limit": "이 객실의 기기 한도에 도달했습니다.",
+  "placeholder_room": "예: 101",
+  "placeholder_name": "예: 홍길동",
+  "placeholder_voucher": "예: ABCD1234"
+}

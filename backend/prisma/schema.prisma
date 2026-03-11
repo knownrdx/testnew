@@ -1,0 +1,239 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AdminRole {
+  MANAGER
+  STAFF
+}
+
+enum PmsEventType {
+  CHECKIN
+  CHECKOUT
+}
+
+enum HotelPlan {
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+model SuperAdmin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("super_admins")
+}
+
+model Hotel {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  logo          String?
+  brandColor    String   @default("#2563EB")
+  plan          HotelPlan @default(STARTER)
+  webhookSecret String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  admins           HotelAdmin[]
+  routers          MikroTikRouter[]
+  bandwidthProfiles BandwidthProfile[]
+  rooms            Room[]
+  vouchers         Voucher[]
+  pmsEvents        PmsEvent[]
+  portalConfig     PortalConfig?
+  auditLogs        AuditLog[]
+
+  @@map("hotels")
+}
+
+model HotelAdmin {
+  id           String    @id @default(cuid())
+  hotelId      String
+  email        String    @unique
+  passwordHash String
+  role         AdminRole @default(STAFF)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  hotel     Hotel      @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  auditLogs AuditLog[]
+
+  @@index([hotelId])
+  @@map("hotel_admins")
+}
+
+model MikroTikRouter {
+  id                String   @id @default(cuid())
+  hotelId           String
+  name              String
+  host              String
+  port              Int      @default(8728)
+  username          String
+  encryptedPassword String
+  isOnline          Boolean  @default(false)
+  lastSeen          DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  hotel        Hotel          @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotspotUsers HotspotUser[]
+
+  @@index([hotelId])
+  @@map("mikrotik_routers")
+}
+
+model BandwidthProfile {
+  id            String @id @default(cuid())
+  hotelId       String
+  name          String
+  downloadKbps  Int
+  uploadKbps    Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  hotel   Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  rooms   Room[]
+  vouchers Voucher[]
+
+  @@index([hotelId])
+  @@map("bandwidth_profiles")
+}
+
+model Room {
+  id                 String  @id @default(cuid())
+  hotelId            String
+  number             String
+  floor              String?
+  maxDevices         Int     @default(3)
+  bandwidthProfileId String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  hotel             Hotel             @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  bandwidthProfile  BandwidthProfile? @relation(fields: [bandwidthProfileId], references: [id])
+  hotspotUsers      HotspotUser[]
+
+  @@unique([hotelId, number])
+  @@index([hotelId])
+  @@map("rooms")
+}
+
+model HotspotUser {
+  id           String   @id @default(cuid())
+  routerId     String
+  roomId       String?
+  username     String
+  passwordHash String
+  macAddresses String[]
+  expiresAt    DateTime?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  router   MikroTikRouter @relation(fields: [routerId], references: [id], onDelete: Cascade)
+  room     Room?           @relation(fields: [roomId], references: [id])
+  sessions WifiSession[]
+
+  @@index([routerId])
+  @@index([roomId])
+  @@map("hotspot_users")
+}
+
+model WifiSession {
+  id            String    @id @default(cuid())
+  hotspotUserId String
+  mac           String
+  ip            String?
+  bytesIn       BigInt    @default(0)
+  bytesOut      BigInt    @default(0)
+  startedAt     DateTime  @default(now())
+  endedAt       DateTime?
+
+  hotspotUser HotspotUser @relation(fields: [hotspotUserId], references: [id], onDelete: Cascade)
+
+  @@index([hotspotUserId])
+  @@index([startedAt])
+  @@map("wifi_sessions")
+}
+
+model Voucher {
+  id                 String   @id @default(cuid())
+  hotelId            String
+  bandwidthProfileId String?
+  code               String
+  maxUses            Int      @default(1)
+  usedCount          Int      @default(0)
+  expiresAt          DateTime?
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  hotel            Hotel             @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  bandwidthProfile BandwidthProfile? @relation(fields: [bandwidthProfileId], references: [id])
+
+  @@index([hotelId])
+  @@map("vouchers")
+}
+
+model PmsEvent {
+  id          String       @id @default(cuid())
+  hotelId     String
+  type        PmsEventType
+  guestName   String?
+  roomNumber  String?
+  rawPayload  Json
+  processedAt DateTime?
+  createdAt   DateTime     @default(now())
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@index([hotelId])
+  @@index([createdAt])
+  @@map("pms_events")
+}
+
+model PortalConfig {
+  id             String   @id @default(cuid())
+  hotelId        String   @unique
+  logoUrl        String?
+  bgImageUrl     String?
+  primaryColor   String   @default("#2563EB")
+  secondaryColor String   @default("#1E40AF")
+  welcomeText    String   @default("Welcome! Please log in to access WiFi.")
+  languages      String[] @default(["en"])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("portal_configs")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  adminId    String?
+  hotelId    String?
+  action     String
+  entity     String
+  entityId   String?
+  meta       Json?
+  createdAt  DateTime @default(now())
+
+  admin HotelAdmin? @relation(fields: [adminId], references: [id])
+  hotel Hotel?      @relation(fields: [hotelId], references: [id])
+
+  @@index([hotelId])
+  @@index([adminId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
